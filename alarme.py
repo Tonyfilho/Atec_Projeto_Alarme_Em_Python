@@ -48,7 +48,7 @@ def ler_ficheiro():
 # ++++++++++++++++++++++++++++++++
 def Autor():
     messagebox.showinfo('Dialogo Autor',
-                        '\nName : Luis Filipe\nFunction : It Trainning\nCurso: CET´s Palmela\n\nMake the thing\'s easy')
+                        '\nName : Antonio Filho & Debora Mutiz\nFunction : It Trainning\nCurso: CET´s Palmela\n\nMake the thing\'s easy')
 
 
 # ++++++++++++++++++++++++++++++++
@@ -60,13 +60,13 @@ def Linguagem():
 # ++++++++++++++++++++++++++++++++
 def Programa():
     messagebox.showinfo('Dialogo Programa',
-                        '\nPrograma que mostra\na possibilidade de usar MenuBar\nnuma aplicação Python GUI(Tkinter)')
+                        '\nPrograma que mostra\numa interface de um Alarme\nnuma aplicação Python GUI(Tkinter)')
 
 
 # ++++++++++++++++++++++++++++++++
 def abandonar():
     perg = messagebox.askquestion('Dialogo Abandonar',
-                                  '\nConfirma que deseija\nabandonar a aplicação.\n')
+                                  '\nConfirma que deseja\nabandonar a aplicação.\n')
     if perg == 'yes':
         root.destroy()
 

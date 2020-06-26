@@ -15,15 +15,16 @@ from datetime import datetime
 from tkinter import ttk
 import tkinter as tk
 import csv
+
 from PIL import ImageTk, Image
-from time import sleep
+
 
 
 # +++++++++++++++++++++++++++++++++++++++++++
 # dados Globais
 
 
-Int_img = ['Botao_Off1_d.png', 'Botao_On1_d.png']
+Int_img = ['Img/Botao_Off1_d.png', 'Img/Botao_On1_d.png']
 estado1, estado2 = False, False
 
 dados = [];
@@ -60,7 +61,7 @@ def Linguagem():
 # ++++++++++++++++++++++++++++++++
 def Programa():
     messagebox.showinfo('Dialogo Programa',
-                        '\nPrograma que mostra\numa interface de um Alarme\nnuma aplicação Python GUI(Tkinter)')
+                        '\nPrograma que mostra\numa interface de um Alarme\nem uma aplicação Python GUI(Tkinter)')
 
 
 # ++++++++++++++++++++++++++++++++
@@ -116,6 +117,23 @@ def AlarmePortas():
         c.itemconfig(porta1Res, fill='orange')
         c.itemconfig(porta1Pri, fill='orange')
 
+        #Registro de alarme na portas desligado
+        hoje = datetime.now()
+        data = hoje.strftime("%d-%m-%Y")
+        horas = hoje.strftime("%H:%M")
+        arquivo = open('alarmes.dat', 'a')
+
+        # escreve os dados por linha
+        arquivo.write(' Alarme Desligado nas Portas ')
+        arquivo.write(',')
+        arquivo.write(data)
+        arquivo.write(',')
+        arquivo.write(horas)
+        arquivo.write('\n')
+
+        # fechar o ficheiro
+        arquivo.close()
+
 
 
 # ++++++++++++++++++++++++++++++++
@@ -170,6 +188,22 @@ def AlarmeJanelas():
         ms2.set('OFF')
         imag2 = PhotoImage(file=Int_img[0])
         b2.configure(image=imag2)
+        #Registro de alarme na janela desligado
+        hoje = datetime.now()
+        data = hoje.strftime("%d-%m-%Y")
+        horas = hoje.strftime("%H:%M")
+        arquivo = open('alarmes.dat', 'a')
+
+        # escreve os dados por linha
+        arquivo.write(' Alarme Desligado nas Janelas ')
+        arquivo.write(',')
+        arquivo.write(data)
+        arquivo.write(',')
+        arquivo.write(horas)
+        arquivo.write('\n')
+
+        # fechar o ficheiro
+        arquivo.close()
         c.itemconfig(janela1Res, fill='orange')
         c.itemconfig(janela2Res, fill='orange')
         c.itemconfig(janela3Res, fill='orange')
@@ -185,7 +219,7 @@ def AlarmeJanelas():
 #*******************************************************Funções de troca de IMG na TAB0
 def next(panel):
     #quant = 0
-    imagens = ["piso_um.png", "pisonovozero1.png", "piso_zero.png", "pisonovozero.png"]
+    imagens = ["Img/casa2_imagem.png", "Img/piso_dois.png"]
     for i in imagens:
        path = i
 
@@ -197,7 +231,7 @@ def next(panel):
 
 def prev(panel):
 
-    path = "casa2_imagem.png"
+    path = "Img/casa2_imagem.png"
     img = ImageTk.PhotoImage(Image.open(path))
     panel.configure(image=img)
     panel.image = img # keep a reference!
@@ -219,8 +253,8 @@ def show():
     print(lista[1])  # imprime a linha 2 da lista, inteira
     for i in lista:
         Data = i[2]
-        Hora = i[0]
         Sensor = i[1]
+        Hora = i[0]
         listBox.insert("", "end", values=(i, Sensor, Data, Hora))
 
 # +++++++++++++++++++++++++++++++++++++++++++
@@ -273,10 +307,6 @@ note = ttk.Notebook(root)
 # tab0 ----------------------------------------------------------------imagem da capa
 tab0 = Frame(note)
 
-#imagemCapa = PhotoImage(file='casa2_imagem.png')
-#lb_capa = Label(tab0, image=imagemCapa)
-#lb_capa.pack(side=LEFT, pady=10)
-
 
 #Create main window
 window = tab0
@@ -288,7 +318,7 @@ bottom = tk.Frame(window)
 bottom.pack(side="bottom")
 
 #place image
-path = "casa2_imagem.png"
+path = "Img/casa2_imagem.png"
 img = ImageTk.PhotoImage(Image.open(path))
 panel = tk.Label(window, image = img)
 panel.image = img # keep a reference!
@@ -351,7 +381,7 @@ p1.pack()
 c = Canvas(tab1, width="1200", height="550", bg="white")
 
 # sem alarme
-img_ps0 = PhotoImage(file='pisonovozero.png')  # imagem de fundo planta
+img_ps0 = PhotoImage(file='Img/pisonovozero.png')  # imagem de fundo planta
 fundo = c.create_image(20, 275, image=img_ps0, anchor=W)#--------------------------ALTERADO
 porta1Res = c.create_oval(70, 120, 80, 130, fill='orange')  # -----------------------------Alarme
 janela1Res = c.create_oval(70, 450, 80, 460, fill='orange')  # -----------------------------Alarme_janela
@@ -364,13 +394,11 @@ janela6Res = c.create_oval(510, 210, 520, 220, fill='orange')  # ---------------
 
 
 
-# sem alarme
 
-#c.pack()
 
 #---------------------------------------------------painel grafico02
-# sem alarme
-img_ps1 = PhotoImage(file='pisonovozero.png')  # imagem de fundo planta
+
+img_ps1 = PhotoImage(file='Img/pisonovozero.png')  # imagem de fundo planta
 fundo = c.create_image(620, 275, image=img_ps0, anchor=W)#--------------------------ALTERADO
 porta1Pri = c.create_oval(670, 120, 680, 130, fill='orange')  # --------------------------------Alarme Portas
 # sem alarme
@@ -380,10 +408,6 @@ janela3Pri = c.create_oval(920, 450, 930, 460, fill='orange')  # ---------------
 janela4Pri = c.create_oval(1110, 220, 1120, 230, fill='orange')  # -----------------------------Alarme_janela
 janela5Pri = c.create_oval(1180, 820, 1190, 830, fill='blue')  # -----------------------------Alarme_janela
 janela6Pri = c.create_oval(1180, 680, 1190, 690, fill='blue')  # -----------------------------Alarme_janela
-
-
-
-
 c.pack()# +++++++++++++++++++++++++++++++++++++++++++
 
 
@@ -413,7 +437,7 @@ p2.pack()
 # tab 2-----------------------------------------------------------------Registro de Ocorrências
 tab2 = Frame(note)
 p3 = Frame(tab2, width="1000", height="200", bg="")
-#tabela = Label(p3, command=ler_ficheiro())
+
 
 #----------------------------------------------------------------------------fim do teste
 p3.pack()#------------------------------------------------------------fim do p3.tab2
@@ -421,19 +445,19 @@ p3.pack()#------------------------------------------------------------fim do p3.
 d = Canvas(tab2, width="1200", height="550", bg="black")
 label = tk.Label(d, text="Tabela de Eventos de Alarme", font=("Arial", 20)).grid(row=0, columnspan=3)
 # create Treeview with 3 columns
-cols = ('Local do Alarme', 'Data', 'Hora')
+cols = ('Local', '      Data', '     Hora')
 listBox = ttk.Treeview(d, columns=cols, show='headings')
 # set column headings
 for col in cols:
     listBox.heading(col, text=col)
 listBox.grid(row=1, column=0, columnspan=2)
-showScores = tk.Button(d, text="Show scores", width=15, command=show).grid(row=4, column=0)
-closeButton = tk.Button(d, text="Close", width=15, command=exit).grid(row=4, column=1)
+showScores = tk.Button(d, text="Mostrar Históricos", width=15, command=show).grid(row=4, column=0)
+closeButton = tk.Button(d, text="Fechar o programa", width=15, command=exit).grid(row=4, column=1)
 
 
 d.pack()
 # Imagem da bola
-img3 = PhotoImage(file='redball.gif')
+img3 = PhotoImage(file='Img/redball.gif')
 
 # Titulo dos separadores
 note.add(tab0, text='  Capa da App  ', image=img3, compound=LEFT)
@@ -445,4 +469,5 @@ note.pack(expand=1, fill=BOTH)
 # +++++++++++++++++++++++++++++++++++++++++++
 # mostrar o GUI
 root.mainloop()
+input()
 
